@@ -1,7 +1,7 @@
 # THIS ONE IS IN THE CURRENT EDITROOMLIVE APP AND WORKING
 
 cookieParser = require 'cookie-parser'
-cookieParserUtils = require 'cookie-parser/lib/parse'
+# cookieParserUtils = require 'cookie-parser/lib/parse'
 express = require 'express'
 expressLayer = require 'express/lib/router/layer'
 expressSession = require 'express-session'
@@ -116,7 +116,7 @@ express.application.io = (options) ->
                     data.cookies = request.cookies
                     rawCookie = data.cookies #[sessionConfig.key]
                     return next "No cookie present", false unless rawCookie?
-                    sessionId = cookieParserUtils.signedCookies rawCookie, options.secret
+                    sessionId = cookieParser.signedCookies rawCookie, options.secret
                     # console.log('what up cookie parser:', rawCookie, sessionId)
                     data.sessionID = sessionId
                     options.store.get sessionId, (error, session) ->
@@ -125,7 +125,7 @@ express.application.io = (options) ->
                         next null, true
             
             # console.log 'parser going to check signed cookies with raw cookie:', rawCookie, options.secret
-            sessionId = cookieParserUtils.signedCookies rawCookie, options.secret
+            sessionId = cookieParser.signedCookies rawCookie, options.secret
             # console.log 'io found a session id:', sessionId
             # console.log('req.sessionID:', req.sessionID[app.sessionSecret]);
             # var sessionData = JSON.parse(app.sessionStore.sessions[req.sessionID[app.sessionSecret]]);
